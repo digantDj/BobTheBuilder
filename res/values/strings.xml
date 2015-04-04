@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Bob The Builder</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <color name="bobColor">#EB6242</color>
+    <string name="miles">to Miles</string>
+    <string name="kmh">to km/h</string>
+    <string name="calc">Calculate</string>
+
+</resources>
