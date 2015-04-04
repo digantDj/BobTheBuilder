@@ -1,7 +1,11 @@
 package com.example.bobthebuilder;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View; 
 import android.view.MenuItem;
@@ -13,16 +17,27 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 	// public var  
-    private EditText text; 
+    private EditText text;
+    private BroadcastReceiver mReceiver;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // findViewById = Finds a view that was identified by the id attribute  
         // from the XML that was processed in onCreate(Bundle).  
         // (EditText) = typecast  
         text = (EditText) findViewById(R.id.editText1);
+        
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_USER_PRESENT);
+
+        mReceiver = new ScreenReceiver();
+        registerReceiver(mReceiver, filter);
+        
     }
 
 
@@ -44,6 +59,37 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    @Override
+    public void onDestroy()
+    {
+          super.onDestroy();
+          Log.v("$$$$$$", "In Method: onDestroy()");
+         
+          if (mReceiver != null)
+          {
+                unregisterReceiver(mReceiver);
+                mReceiver = null;
+          }          
+       
+    }
+    
+    @Override
+    public void  onSaveInstanceState(Bundle outState)
+    {
+          Log.v("$````$", "In Method: onSaveInstanceState()");
+          //if necessary,set a flag to check whether we have to restore or not
+          //handle necessary savings…
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle inState)
+    {
+          Log.v("$````$", "In Method: onRestoreInstanceState()");
+          //if any saved state, restore from it…
+    }
+    
+    
     
     /* 
      * Will be executed by clicking on the calculate button because we assigned 
