@@ -4,9 +4,13 @@
     <string name="app_name">Bob The Builder</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <color name="bobColor">#EB6242</color>
+    <color name="bobColor">#FF5A54</color>
+    <color name="bobColorShadow">#E5524B</color>
     <string name="miles">to Miles</string>
     <string name="kmh">to km/h</string>
     <string name="calc">Calculate</string>
+    <string name="timerInitVal">30:00</string>
+    <string name="startButtonLabel">Build</string>
+    
 
 </resources>

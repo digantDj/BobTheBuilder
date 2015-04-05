@@ -5,21 +5,33 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View; 
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.RadioButton;  
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;  
 
 
 public class MainActivity extends Activity {
 
 	// public var  
-    private EditText text;
+    private TextView timerValue;
     private BroadcastReceiver mReceiver;
-	
+    private Button timerButton;
+    
+    private long startTime = 0L;
+    
+    private Handler customHandler = new Handler();
+    
+    long timeInMilliseconds = 0L;
+	long timeSwapBuff = 0L;
+	long updatedTime = 0L;
+
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	
@@ -28,8 +40,10 @@ public class MainActivity extends Activity {
         // findViewById = Finds a view that was identified by the id attribute  
         // from the XML that was processed in onCreate(Bundle).  
         // (EditText) = typecast  
-        text = (EditText) findViewById(R.id.editText1);
+        timerValue = (TextView) findViewById(R.id.timerValue);
         
+    
+        //Code for returning on the application after screen unlocked
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
 
         filter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -93,46 +107,44 @@ public class MainActivity extends Activity {
     
     /* 
      * Will be executed by clicking on the calculate button because we assigned 
-     * "Calculate" to the "onClick" Property! 
+     * "startTimer" to the "onClick" Property! 
      */  
-    public void Calculate(View view) {  
-  
-        RadioButton mileButton = (RadioButton) findViewById(R.id.radioButton1);  
-        RadioButton kmhButton = (RadioButton) findViewById(R.id.radioButton2);  
+    public void startTimer(View view) {  
+    	
         // if the text field is empty show the message "enter a valid number"  
-        if (text.getText().length() == 0) {  
+        if (!timerValue.getText().toString().equals("30:00")) {  
             // Toast = focused floating view that will be shown over the main  
             // application  
-            Toast.makeText(this, "enter a valid number", Toast.LENGTH_LONG)  
+        	Log.v("$````$", "In Method: "+timerValue.getText());
+            Toast.makeText(this, "Sorry!! Timer already started", Toast.LENGTH_LONG)  
                     .show();  
         } else {  
-            //parse input Value from Text Field  
-            double inputValue = Double.parseDouble(text.getText().toString());  
-            // convert to...  
-            if (mileButton.isChecked()) {  
-                text.setText(String.valueOf(convertToMiles(inputValue)));  
-                // uncheck "to miles" Button  
-                mileButton.setChecked(false);  
-                // check "to km/h" Button  
-                kmhButton.setChecked(true);  
-            } else { /* if kmhButton isChecked() */  
-                text.setText(String.valueOf(convertToKmh(inputValue)));  
-                // uncheck "to km/h" Button  
-                kmhButton.setChecked(false);  
-                // check "to miles" Button  
-                mileButton.setChecked(true);  
-            }  
+            //Start the timer
+        	Log.v("$````$", "Starting Timer");
+        	startTime = SystemClock.uptimeMillis();
+			customHandler.postDelayed(updateTimerThread, 0);
+              
         }  
-    }  
+    }
+    
+    private Runnable updateTimerThread = new Runnable() {
+
+		public void run() {
+
+			timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+			
+			updatedTime = 30 - (timeSwapBuff - timeInMilliseconds);
+			
+			int secs = (int) (updatedTime / 1000);
+			int mins = secs / 60;
+			secs = secs % 60;
+			timerValue.setText("" + mins + ":" + String.format("%02d", secs));
+			//timerValue.setText(SystemClock.uptimeMillis()+ " + " + startTime);
+			
+			customHandler.postDelayed(this, 0);
+		}
+
+	};
   
-    private double convertToMiles(double inputValue) {  
-        // convert km/h to miles  
-        return (inputValue * 1.609344);  
-    }  
-  
-    private double convertToKmh(double inputValue) {  
-        // convert miles to km/h  
-        return (inputValue * 0.621372);  
-    }  
     
 }

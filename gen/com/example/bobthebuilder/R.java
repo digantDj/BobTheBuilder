@@ -12,6 +12,7 @@ public final class R {
     }
     public static final class color {
         public static final int bobColor=0x7f060000;
+        public static final int bobColorShadow=0x7f060001;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -28,11 +29,9 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090004;
-        public static final int button1=0x7f090000;
-        public static final int editText1=0x7f090001;
-        public static final int radioButton1=0x7f090002;
-        public static final int radioButton2=0x7f090003;
+        public static final int action_settings=0x7f090002;
+        public static final int startButton=0x7f090001;
+        public static final int timerValue=0x7f090000;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -47,6 +46,8 @@ public final class R {
         public static final int hello_world=0x7f050001;
         public static final int kmh=0x7f050004;
         public static final int miles=0x7f050003;
+        public static final int startButtonLabel=0x7f050007;
+        public static final int timerInitVal=0x7f050006;
     }
     public static final class style {
         /** 
