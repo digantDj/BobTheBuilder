@@ -1,47 +1,51 @@
 package com.example.bobthebuilder;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
+import android.os.CountDownTimer;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View; 
 import android.view.MenuItem;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;  
+import android.widget.Toast;
 
 
-public class MainActivity extends Activity {
 
-	// public var  
-    private TextView timerValue;
+public class MainActivity extends Activity  implements OnClickListener {
+
+	private MalibuCountDownTimer countDownTimer;
+	private boolean timerHasStarted = false;
+	private Button startB;
+	private TextView text;
+
+	private final long startTime = 1000*60*30;
+	private final long interval = 1000;
+	
     private BroadcastReceiver mReceiver;
-    private Button timerButton;
-    
-    private long startTime = 0L;
-    
-    private Handler customHandler = new Handler();
-    
-    long timeInMilliseconds = 0L;
-	long timeSwapBuff = 0L;
-	long updatedTime = 0L;
-
-    
+     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // findViewById = Finds a view that was identified by the id attribute  
-        // from the XML that was processed in onCreate(Bundle).  
-        // (EditText) = typecast  
-        timerValue = (TextView) findViewById(R.id.timerValue);
-        
+        startB = (Button) this.findViewById(R.id.startButton);
+		startB.setOnClickListener(this);
+
+		text = (TextView) this.findViewById(R.id.timerValue);
+		countDownTimer = new MalibuCountDownTimer(startTime, interval);
+		text.setText(convertMilliToTimeString(startTime));
+          
     
         //Code for returning on the application after screen unlocked
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
@@ -51,10 +55,88 @@ public class MainActivity extends Activity {
 
         mReceiver = new ScreenReceiver();
         registerReceiver(mReceiver, filter);
+    }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+
+        boolean screenOn;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //screenOn = pm.isInteractive();
+        	screenOn = pm.isScreenOn();
+        } else {
+            screenOn = pm.isScreenOn();
+        }
+
+        if (screenOn) {
+            // Screen is still on, so do your thing here
+        	Log.v("$$$$$$", "In Method: onPause()");
+        }
         
     }
+    
+    @Override
+    public void onStop() {
+    	super.onStop();
+    	countDownTimer.cancel();
+		timerHasStarted = false;
+		text.setText("30:00");
+		startB.setText("Build");
+    	tToast("onStop.");
+    	Log.v("$$$$$$", "In Method: onStop()");
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        //tToast("onResume.");
+        Log.v("$$$$$$", "In Method: onResume()");
+    }
+    
+    
+    @Override
+	public void onClick(View v)	{
+		if (!timerHasStarted) {
+			countDownTimer.start();
+			timerHasStarted = true;
+			startB.setText("Kill Bob");
+		}
+		else {
+			countDownTimer.cancel();
+			timerHasStarted = false;
+			text.setText("30:00");
+			startB.setText("Build");
+		}
+	}
+    	
+    // CountDownTimer class
+ 	public class MalibuCountDownTimer extends CountDownTimer {
 
+ 		public MalibuCountDownTimer(long startTime, long interval)	{
+ 						super(startTime, interval);
+ 		}
 
+ 		@Override
+ 		public void onFinish(){
+ 						text.setText("Time's up!");
+ 		}
+
+ 		@Override
+ 		public void onTick(long millisUntilFinished) {
+ 						text.setText(convertMilliToTimeString(millisUntilFinished));
+ 		}
+ 	}
+
+ 	public String convertMilliToTimeString(long milliseconds) {
+ 			NumberFormat f = new DecimalFormat("00");
+ 			int seconds = (int) ((milliseconds / 1000) % 60);
+			int minutes = (int) ((milliseconds / 1000) / 60);
+ 			String finalString = f.format(minutes) + ":" + f.format(seconds);
+			return finalString;
+ 	}
+ 		
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -103,48 +185,10 @@ public class MainActivity extends Activity {
           //if any saved state, restore from it…
     }
     
-    
-    
-    /* 
-     * Will be executed by clicking on the calculate button because we assigned 
-     * "startTimer" to the "onClick" Property! 
-     */  
-    public void startTimer(View view) {  
-    	
-        // if the text field is empty show the message "enter a valid number"  
-        if (!timerValue.getText().toString().equals("30:00")) {  
-            // Toast = focused floating view that will be shown over the main  
-            // application  
-        	Log.v("$````$", "In Method: "+timerValue.getText());
-            Toast.makeText(this, "Sorry!! Timer already started", Toast.LENGTH_LONG)  
-                    .show();  
-        } else {  
-            //Start the timer
-        	Log.v("$````$", "Starting Timer");
-        	startTime = SystemClock.uptimeMillis();
-			customHandler.postDelayed(updateTimerThread, 0);
-              
-        }  
+    private void tToast(String s) {
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, s, duration);
+        toast.show();
     }
-    
-    private Runnable updateTimerThread = new Runnable() {
-
-		public void run() {
-
-			timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-			
-			updatedTime = 30 - (timeSwapBuff - timeInMilliseconds);
-			
-			int secs = (int) (updatedTime / 1000);
-			int mins = secs / 60;
-			secs = secs % 60;
-			timerValue.setText("" + mins + ":" + String.format("%02d", secs));
-			//timerValue.setText(SystemClock.uptimeMillis()+ " + " + startTime);
-			
-			customHandler.postDelayed(this, 0);
-		}
-
-	};
-  
-    
 }
