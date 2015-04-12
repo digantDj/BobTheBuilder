@@ -22,12 +22,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View; 
 import android.view.MenuItem;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity  implements OnClickListener {
+public class MainActivity extends Activity {
 
 	private MalibuCountDownTimer countDownTimer;
 	private boolean timerHasStarted = false;
@@ -53,8 +52,7 @@ public class MainActivity extends Activity  implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startB = (Button) this.findViewById(R.id.startButton);
-		startB.setOnClickListener(this);
+        startB = (Button) findViewById(R.id.startButton);
 
 		text = (TextView) this.findViewById(R.id.timerValue);
 		countDownTimer = new MalibuCountDownTimer(startTime, interval);
@@ -119,21 +117,22 @@ public class MainActivity extends Activity  implements OnClickListener {
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         if (sharedpreferences.contains(BuiltScore))
         {
-           tToast(sharedpreferences.getString(BuiltScore, ""));
+           //tToast(sharedpreferences.getString(BuiltScore, ""));
         }
         if (sharedpreferences.contains(UnBuiltScore))
         {
-           tToast(sharedpreferences.getString(UnBuiltScore, ""));
+           //tToast(sharedpreferences.getString(UnBuiltScore, ""));
         }
     }
         
     
-    @Override
-	public void onClick(View v)	{
+    
+	public void startTimer(View v)	{
 		if (!timerHasStarted) {
 			countDownTimer.start();
 			timerHasStarted = true;
-			startB.setText(getText(R.string.duringBuildButtonLabel));
+			startB.setText(R.string.duringBuildButtonLabel);
+			//startB.setText(getText(R.string.duringBuildButtonLabel));
 		}
 		else {
 			alertMessage();
@@ -281,7 +280,9 @@ public class MainActivity extends Activity  implements OnClickListener {
               0,
               PendingIntent.FLAG_UPDATE_CURRENT
            );
-
+        //For canceling the notification on click 
+        mBuilder.setAutoCancel(true);
+        
         mBuilder.setContentIntent(resultPendingIntent);
 
         mNotificationManager =
@@ -289,5 +290,7 @@ public class MainActivity extends Activity  implements OnClickListener {
 
         /* notificationID allows you to update the notification later on. */
         mNotificationManager.notify(notificationID, mBuilder.build());
+        
      }
+    
 }

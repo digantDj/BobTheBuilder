@@ -5,12 +5,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <color name="bobColor">#FF5A54</color>
-    <color name="backgroundColor">#4dc2d6</color>
+    <color name="bobTextColor">#FFFFFF</color>
+    <color name="backgroundColor">#16a085</color>
     <color name="backgroundColor2">#ffffff</color>
     <color name="bobColorShadow">#E5524B</color>
     <string name="calc">Calculate</string>
     <string name="timerInitVal">30:00</string>
     <string name="startButtonLabel">Start Building</string>
+    <string name="startBuildingText">Press Build Button to start Building!!</string>
     <string name="duringBuildButtonLabel">Kill Bob</string>
     <string name="timeUpMessage">Congrats you built a new building today!!</string>
     

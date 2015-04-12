@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
     android:gravity="center_vertical"
-    android:onClick="startTimer"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -15,17 +14,34 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="136dp"
-        android:layout_weight="0.31"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:background="@color/backgroundColor"
-        android:gravity="center" >
+        android:gravity="center"
+        android:orientation="vertical" >
 
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/startBuildingText"			android:textColor="@color/bobTextColor"
+			android:textAlignment="1"
+			android:layout_marginBottom="45dp"
+            android:textSize="27sp" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:contentDescription="Base Image Location"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ground" />
         
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="136dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/backgroundColor"
         android:gravity="center"
         android:orientation="vertical" >
@@ -35,14 +51,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/timerInitVal"
-            android:textColor="#ffffff"
-            android:textSize="40sp" />
+            android:textColor="@color/bobTextColor"
+            android:layout_marginBottom="25dp"
+            android:textSize="60sp" />
         
         <Button
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/startButtonLabel" />
+            android:onClick="startTimer"
+            android:text="@string/startButtonLabel"
+            android:textColor="@color/bobTextColor" />
         
     </LinearLayout>
 
