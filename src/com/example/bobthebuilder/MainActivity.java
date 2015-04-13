@@ -2,6 +2,7 @@ package com.example.bobthebuilder;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,7 +32,8 @@ public class MainActivity extends Activity {
 	private MalibuCountDownTimer countDownTimer;
 	private boolean timerHasStarted = false;
 	private Button startB;
-	private TextView text;
+	private TextView timerText;
+	private TextView statusText;
 	
 	private NotificationManager mNotificationManager;
 	private int notificationID = 100;
@@ -53,12 +55,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startB = (Button) findViewById(R.id.startButton);
-
-		text = (TextView) this.findViewById(R.id.timerValue);
+        
+        statusText = (TextView) this.findViewById(R.id.statusTextView);
+		timerText = (TextView) this.findViewById(R.id.timerValue);
 		countDownTimer = new MalibuCountDownTimer(startTime, interval);
-		text.setText(convertMilliToTimeString(startTime));
+		timerText.setText(convertMilliToTimeString(startTime));
           
-    
         //Code for returning on the application after screen unlocked
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
 
@@ -94,8 +96,9 @@ public class MainActivity extends Activity {
     	if (screenOn) {
     	countDownTimer.cancel();
 		timerHasStarted = false;
-		text.setText(getText(R.string.timerInitVal));
+		timerText.setText(getText(R.string.timerInitVal));
 		startB.setText(getText(R.string.startButtonLabel));
+		statusText.setText(getText(R.string.startBuildingText));
 		// Store values between instances here
 	       	Editor editor = sharedpreferences.edit();
 	       bobUnBuildScore = Integer.toString((Integer.parseInt(bobUnBuildScore) + 1));
@@ -132,7 +135,7 @@ public class MainActivity extends Activity {
 			countDownTimer.start();
 			timerHasStarted = true;
 			startB.setText(R.string.duringBuildButtonLabel);
-			//startB.setText(getText(R.string.duringBuildButtonLabel));
+			statusText.setText(R.string.duringBuildingText);
 		}
 		else {
 			alertMessage();
@@ -155,12 +158,17 @@ public class MainActivity extends Activity {
  	       Log.v("$$$$$$", "BuiltScore Value:"+bobBuildScore);     
  	        // Commit to storage
  	        editor.commit();
- 			text.setText(getText(R.string.timeUpMessage));
+ 			timerText.setText(getText(R.string.timeUpMessage));
  		}
 
  		@Override
  		public void onTick(long millisUntilFinished) {
- 						text.setText(convertMilliToTimeString(millisUntilFinished));
+ 				String[] statuses = getResources().getStringArray(R.array.duringBuildingMessages_array);
+ 				if((int) (((millisUntilFinished / 1000) % 60) / 20) == 0){
+ 					int idx = new Random().nextInt(statuses.length);
+ 					statusText.setText(statuses[idx]);
+ 				}
+ 				timerText.setText(convertMilliToTimeString(millisUntilFinished));
  		}
  	}
 
@@ -180,8 +188,9 @@ public class MainActivity extends Activity {
                              // Yes button clicked
                     	  		countDownTimer.cancel();
               					timerHasStarted = false;
-              					text.setText(getText(R.string.timerInitVal));
+              					timerText.setText(getText(R.string.timerInitVal));
               					startB.setText(getText(R.string.startButtonLabel));
+              					statusText.setText(getText(R.string.startBuildingText));
               				// Store values between instances here
               		 	       	Editor editor = sharedpreferences.edit();
               		 	       	bobUnBuildScore = Integer.toString(Integer.parseInt(bobUnBuildScore)+1);
@@ -199,7 +208,7 @@ public class MainActivity extends Activity {
          	};
 
          AlertDialog.Builder builder = new AlertDialog.Builder(this);
-         builder.setMessage("You sure want to kill the cute little Bob ?")
+         builder.setMessage("You sure want to kill the hard working Bob ?")
                       .setPositiveButton("Yes, destroy the building also!!", dialogClickListener)
                       .setNegativeButton("No, can think again!!", dialogClickListener).show();
  	}

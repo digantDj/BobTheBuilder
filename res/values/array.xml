@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="duringBuildingMessages_array">
+        <item>@string/duringBuildMessage1</item>
+        <item>@string/duringBuildMessage2</item>
+        <item>@string/duringBuildMessage3</item>
+        <item>@string/duringBuildMessage4</item>
+        <item>@string/duringBuildMessage5</item>
+        <item>@string/duringBuildMessage6</item>
+        <item>@string/duringBuildMessage7</item>
+        <item>@string/duringBuildMessage8</item>
+        <item>@string/duringBuildMessage9</item>
+        <item>@string/duringBuildMessage10</item>
+    </string-array>
+</resources>

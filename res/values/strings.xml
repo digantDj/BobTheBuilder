@@ -9,12 +9,26 @@
     <color name="backgroundColor">#16a085</color>
     <color name="backgroundColor2">#ffffff</color>
     <color name="bobColorShadow">#E5524B</color>
+    <string name="baseImageDescription">Base Image Position</string>
     <string name="calc">Calculate</string>
     <string name="timerInitVal">30:00</string>
     <string name="startButtonLabel">Start Building</string>
     <string name="startBuildingText">Press Build Button to start Building!!</string>
+    <string name="duringBuildingText">Hang On</string>
     <string name="duringBuildButtonLabel">Kill Bob</string>
     <string name="timeUpMessage">Congrats you built a new building today!!</string>
+    
+    <string name="duringBuildMessage1">Don\'t look at me!</string>
+    <string name="duringBuildMessage2">Go back to your work!</string>
+    <string name="duringBuildMessage3">Stay focused!</string>
+    <string name="duringBuildMessage4">You are almost there!</string>
+    <string name="duringBuildMessage5">Hang in there!</string>
+    <string name="duringBuildMessage6">Keep up the good work!</string>
+    <string name="duringBuildMessage7">You can do it!</string>
+    <string name="duringBuildMessage8">Don\'t give up!</string>
+    <string name="duringBuildMessage9">Leave me alone!</string>
+    <string name="duringBuildMessage10">Stop phubbing!</string>
+    
     
 
 </resources>

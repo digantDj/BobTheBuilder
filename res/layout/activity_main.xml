@@ -21,21 +21,22 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/statusTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/startBuildingText"			android:textColor="@color/bobTextColor"
 			android:textAlignment="1"
-			android:layout_marginBottom="45dp"
+			android:minLines="2"
             android:textSize="27sp" />
 
         <ImageView
             android:id="@+id/imageView1"
-            android:contentDescription="Base Image Location"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="40dp"
+            android:contentDescription="@string/baseImageDescription"
             android:src="@drawable/ground" />
-        
+
     </LinearLayout>
 
     <LinearLayout
