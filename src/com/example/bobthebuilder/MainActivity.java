@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PowerManager;
@@ -23,7 +24,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View; 
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +39,10 @@ public class MainActivity extends Activity {
 	private Button startB;
 	private TextView timerText;
 	private TextView statusText;
+	private TextView buildNumberText;
+	private TextView unBuildNumberText;
+	private ImageView shovelImage;
+	private TranslateAnimation animation;
 	
 	private NotificationManager mNotificationManager;
 	private int notificationID = 100;
@@ -47,17 +56,25 @@ public class MainActivity extends Activity {
 	public static final String MyPREFERENCES = "bobPrefs" ;
 	public static final String BuiltScore = "builtKey"; 
 	public static final String UnBuiltScore = "unBuiltKey";
+	
 	private String bobBuildScore = "0";
 	private String bobUnBuildScore = "0";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Hiding Status Bar
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        getActionBar().hide();
         setContentView(R.layout.activity_main);
-        startB = (Button) findViewById(R.id.startButton);
         
+        startB = (Button) findViewById(R.id.startButton);
         statusText = (TextView) this.findViewById(R.id.statusTextView);
 		timerText = (TextView) this.findViewById(R.id.timerValue);
+		buildNumberText = (TextView) this.findViewById(R.id.buildNumberTextView);
+		unBuildNumberText = (TextView) this.findViewById(R.id.unBuildNumberTextView);
+		shovelImage = (ImageView) findViewById(R.id.shovelImageView);
+		
 		countDownTimer = new MalibuCountDownTimer(startTime, interval);
 		timerText.setText(convertMilliToTimeString(startTime));
           
@@ -72,11 +89,29 @@ public class MainActivity extends Activity {
         if (sharedpreferences.contains(BuiltScore))
         {
         	bobBuildScore = sharedpreferences.getString(BuiltScore, "");
+        	buildNumberText.setText(bobBuildScore);
         }
         if (sharedpreferences.contains(UnBuiltScore))
         {
         	bobUnBuildScore = sharedpreferences.getString(UnBuiltScore, "");
+        	unBuildNumberText.setText(bobUnBuildScore);
         }
+        
+        //Set Font for entire android project
+        Typeface robotoThinFont = Typeface.createFromAsset(getAssets(),"fonts/Roboto/Roboto-Thin.ttf");
+        Typeface robotoCondensedFont = Typeface.createFromAsset(getAssets(),"fonts/RobotoCondensed/RobotoCondensed-Regular.ttf");
+        statusText.setTypeface(robotoCondensedFont);
+        timerText.setTypeface(robotoThinFont);
+        startB.setTypeface(robotoCondensedFont);
+        
+        //Animation shovel
+        animation = new TranslateAnimation(0.0f, 0.0f,
+          0.0f, 20.0f);
+        animation.setDuration(1000);
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(2);
+        animation.setFillAfter(true);
+        shovelImage.startAnimation(animation);
     }
     
     @Override
@@ -120,10 +155,14 @@ public class MainActivity extends Activity {
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         if (sharedpreferences.contains(BuiltScore))
         {
+        	bobBuildScore = sharedpreferences.getString(BuiltScore, "");
+        	buildNumberText.setText(bobBuildScore);
            //tToast(sharedpreferences.getString(BuiltScore, ""));
         }
         if (sharedpreferences.contains(UnBuiltScore))
         {
+        	bobUnBuildScore = sharedpreferences.getString(UnBuiltScore, "");
+        	unBuildNumberText.setText(bobUnBuildScore);
            //tToast(sharedpreferences.getString(UnBuiltScore, ""));
         }
     }
@@ -136,6 +175,7 @@ public class MainActivity extends Activity {
 			timerHasStarted = true;
 			startB.setText(R.string.duringBuildButtonLabel);
 			statusText.setText(R.string.duringBuildingText);
+			shovelImage.clearAnimation();
 		}
 		else {
 			alertMessage();
@@ -155,16 +195,18 @@ public class MainActivity extends Activity {
  	       	Editor editor = sharedpreferences.edit();
  	       bobBuildScore = Integer.toString((Integer.parseInt(bobBuildScore) + 1));
  	        editor.putString(BuiltScore, bobBuildScore);
- 	       Log.v("$$$$$$", "BuiltScore Value:"+bobBuildScore);     
+ 	       buildNumberText.setText(bobBuildScore);
+ 	       Log.v("$$$$$$", "BuiltScore Value:"+bobBuildScore);
  	        // Commit to storage
  	        editor.commit();
- 			timerText.setText(getText(R.string.timeUpMessage));
+ 		   timerText.setText(getText(R.string.timeUpMessage));
  		}
 
  		@Override
  		public void onTick(long millisUntilFinished) {
  				String[] statuses = getResources().getStringArray(R.array.duringBuildingMessages_array);
- 				if((int) (((millisUntilFinished / 1000) % 60) / 20) == 0){
+ 				
+ 				if(((int) (((millisUntilFinished / 1000) % 60)) == 0) ||((int) (((millisUntilFinished / 1000) % 60)) == 20) || ((int) (((millisUntilFinished / 1000) % 60)) == 40) ){
  					int idx = new Random().nextInt(statuses.length);
  					statusText.setText(statuses[idx]);
  				}
@@ -195,14 +237,15 @@ public class MainActivity extends Activity {
               		 	       	Editor editor = sharedpreferences.edit();
               		 	       	bobUnBuildScore = Integer.toString(Integer.parseInt(bobUnBuildScore)+1);
               		 	        editor.putString(UnBuiltScore, bobUnBuildScore);
+              		 	        unBuildNumberText.setText(bobUnBuildScore);
               		 	        Log.v("$$$$$$", "UnBuiltScore Value:"+bobUnBuildScore);
            		 	        // Commit to storage
-              		 	        editor.commit();            					
+              		 	        editor.commit();
+              		 	        shovelImage.startAnimation(animation);
                              break;
                       case DialogInterface.BUTTON_NEGATIVE:
-                             // No button clicked
-                             // do nothing                             
-                             break;
+                    	  	//Do Nothing
+                            break;
                       }
                 }
          	};
@@ -212,7 +255,7 @@ public class MainActivity extends Activity {
                       .setPositiveButton("Yes, destroy the building also!!", dialogClickListener)
                       .setNegativeButton("No, can think again!!", dialogClickListener).show();
  	}
- 		
+ 		/* Upper Menu Add Settings ... Dots Code
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -231,7 +274,7 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-    
+    */
     @Override
     public void onDestroy()
     {

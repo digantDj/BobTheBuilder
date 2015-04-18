@@ -14,8 +14,54 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".14"
+        android:background="@color/backgroundColor"
+        android:gravity="end|center_vertical"
+        android:orientation="horizontal" >
+        
+        <ImageView
+            android:id="@+id/builtHouse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="02dp"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/builtImageDescription"
+            android:src="@drawable/built_house" />        
+        <TextView
+            android:id="@+id/buildNumberTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/initialBuildValue"
+			android:textColor="@color/bobTextColor"
+			android:textAlignment="1"
+			android:layout_marginEnd="10dp"
+            android:textSize="17sp" />
+        
+        <ImageView
+            android:id="@+id/unBuiltHouse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="02dp"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/unBuiltImageDescription"
+            android:src="@drawable/un_built_house" />        
+        <TextView
+            android:id="@+id/unBuildNumberTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/initialUnBuildValue"
+			android:textColor="@color/bobTextColor"
+			android:textAlignment="1"
+            android:textSize="17sp" />
+        
+        
+    </LinearLayout>    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1.5"
         android:background="@color/backgroundColor"
         android:gravity="center"
         android:orientation="vertical" >
@@ -26,23 +72,48 @@
             android:layout_height="wrap_content"
             android:text="@string/startBuildingText"			android:textColor="@color/bobTextColor"
 			android:textAlignment="1"
-			android:minLines="2"
-            android:textSize="27sp" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="40dp"
-            android:contentDescription="@string/baseImageDescription"
-            android:src="@drawable/ground" />
+			android:layout_marginTop="10dp"
+            android:textSize="17sp" />
+		
+		<FrameLayout 
+		       android:layout_width="match_parent"
+		       android:layout_height="match_parent"
+		       android:layout_gravity = "center|center_vertical"
+		       >
+	    
+		    <ImageView
+	            android:id="@+id/imageView1"
+	            android:layout_gravity="center"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:adjustViewBounds="true"
+				android:maxHeight="170dp"
+				android:layout_marginTop="0dp"
+	            android:padding="10dp"
+	            android:contentDescription="@string/baseImageDescription"
+	            android:src="@drawable/ground" />
+		    
+		    <ImageView
+	            android:id="@+id/shovelImageView"
+	            android:layout_width="wrap_content"
+	            android:layout_gravity="center"
+	            android:layout_height="wrap_content"
+	            android:adjustViewBounds="true"
+				android:maxHeight="65dp"
+				android:layout_marginBottom="30dp"
+	            android:padding="10dp"
+	            android:contentDescription="@string/baseImageDescription"
+	            android:src="@drawable/shovel" />
+		    
+		</FrameLayout>
+		    
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.75"
         android:background="@color/backgroundColor"
         android:gravity="center"
         android:orientation="vertical" >
@@ -53,7 +124,7 @@
             android:layout_height="wrap_content"
             android:text="@string/timerInitVal"
             android:textColor="@color/bobTextColor"
-            android:layout_marginBottom="25dp"
+            android:layout_marginBottom="5dp"
             android:textSize="60sp" />
         
         <Button
