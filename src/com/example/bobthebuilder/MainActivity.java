@@ -199,7 +199,8 @@ public class MainActivity extends Activity {
  	       Log.v("$$$$$$", "BuiltScore Value:"+bobBuildScore);
  	        // Commit to storage
  	        editor.commit();
- 		   timerText.setText(getText(R.string.timeUpMessage));
+ 		   statusText.setText(getText(R.string.timeUpMessage));
+ 		   timerText.setText(getText(R.string.timerInitVal));
  		}
 
  		@Override
