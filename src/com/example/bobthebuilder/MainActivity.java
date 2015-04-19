@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 
 	private final long startTime = 1000*60*30;
 	private final long interval = 1000;
-	
+	private boolean isInFront;
 	
 	SharedPreferences sharedpreferences;
 	public static final String MyPREFERENCES = "bobPrefs" ;
@@ -131,17 +131,17 @@ public class MainActivity extends Activity {
     public void onPause() {
         super.onPause();
        	Log.v("$$$$$$", "In Method: onPause()");
-    
+       	isInFront = false;
     }
     
     @Override
     public void onStop() {
     	PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-
+    	isInFront = false;
         boolean screenOn;
         screenOn = pm.isScreenOn();
     	super.onStop();
-    
+
     	if (screenOn && timerHasStarted) {
     	countDownTimer.cancel();
 		timerHasStarted = false;
@@ -170,6 +170,7 @@ public class MainActivity extends Activity {
     public void onResume() {
         super.onResume();  // Always call the superclass method first
         //tToast("onResume.");
+        isInFront = true;
         Log.v("$$$$$$", "In Method: onResume()");
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         if (sharedpreferences.contains(BuiltScore))
@@ -265,8 +266,13 @@ public class MainActivity extends Activity {
  		   PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
  	       boolean screenOn;
  	       screenOn = pm.isScreenOn();
- 	       if(!screenOn){
+ 	       if((!screenOn)||(!isInFront)){
  	    	   displaySuccessNotification();
+ 	       }
+ 	       else{
+ 	    	   Intent intent;
+	 	       intent = new Intent(MainActivity.this, NotificationView.class);
+	 	       startActivity(intent);
  	       }
 
  		}
@@ -316,6 +322,10 @@ public class MainActivity extends Activity {
               		 	        truckImage.clearAnimation();
               		 	        bobBubbleImage.setVisibility(View.VISIBLE);
               		 	        shovelImage.setVisibility(View.VISIBLE);
+              		 	    // Redirect to Failure Notification Screen
+              		 	        Intent intent;
+              		 	     	intent = new Intent(MainActivity.this, NotificationView.class);
+              			    	startActivity(intent);
                              break;
                       case DialogInterface.BUTTON_NEGATIVE:
                     	  	//Do Nothing
@@ -388,16 +398,16 @@ public class MainActivity extends Activity {
         mBuilder.setContentTitle("Successfully Built a Building!!");
         mBuilder.setContentText("Now that you built your building. Share it with your friends");
         mBuilder.setTicker("Yaay!! your Building is ready.");
-        mBuilder.setSmallIcon(R.drawable.woman);
+        mBuilder.setSmallIcon(R.drawable.success_bob);
 
         /* Increase notification number every time a new notification arrives */
         mBuilder.setNumber(++numMessages);
         
         /* Creates an explicit intent for an Activity in your app */
-        Intent resultIntent = new Intent(this, NotificationView.class);
+        Intent resultIntent = new Intent(this, NotificationSuccessView.class);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(NotificationView.class);
+        stackBuilder.addParentStack(NotificationSuccessView.class);
 
         /* Adds the Intent that starts the Activity to the top of the stack */
         stackBuilder.addNextIntent(resultIntent);
