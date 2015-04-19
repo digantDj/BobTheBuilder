@@ -32,24 +32,36 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int built_house=0x7f020000;
-        public static final int ground=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int logo_v2=0x7f020003;
-        public static final int shovel=0x7f020004;
-        public static final int un_built_house=0x7f020005;
-        public static final int woman=0x7f020006;
+        public static final int bob_bubble=0x7f020000;
+        public static final int bob_face=0x7f020001;
+        public static final int building_bob=0x7f020002;
+        public static final int built_house=0x7f020003;
+        public static final int dead_bob=0x7f020004;
+        public static final int dead_bob_bubble=0x7f020005;
+        public static final int ground=0x7f020006;
+        public static final int ground_bubble=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int logo_v2=0x7f020009;
+        public static final int shovel=0x7f02000a;
+        public static final int sign_board=0x7f02000b;
+        public static final int success_bob=0x7f02000c;
+        public static final int truck=0x7f02000d;
+        public static final int un_built_house=0x7f02000e;
+        public static final int woman=0x7f02000f;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f0a0000;
-        public static final int action_settings=0x7f0a000a;
+        public static final int action_settings=0x7f0a000d;
         public static final int buildNumberTextView=0x7f0a0002;
         public static final int builtHouse=0x7f0a0001;
+        public static final int goBackTextView=0x7f0a000c;
         public static final int imageView1=0x7f0a0006;
-        public static final int shovelImageView=0x7f0a0007;
-        public static final int startButton=0x7f0a0009;
+        public static final int imageView2=0x7f0a0007;
+        public static final int shovelImageView=0x7f0a0008;
+        public static final int startButton=0x7f0a000b;
         public static final int statusTextView=0x7f0a0005;
-        public static final int timerValue=0x7f0a0008;
+        public static final int timerValue=0x7f0a000a;
+        public static final int truckImageView=0x7f0a0009;
         public static final int unBuildNumberTextView=0x7f0a0004;
         public static final int unBuiltHouse=0x7f0a0003;
     }
@@ -78,11 +90,14 @@ public final class R {
         public static final int duringBuildMessage8=0x7f060016;
         public static final int duringBuildMessage9=0x7f060017;
         public static final int duringBuildingText=0x7f06000c;
+        public static final int failureStatusMessage=0x7f060019;
+        public static final int goBack=0x7f06001b;
         public static final int hello_world=0x7f060001;
         public static final int initialBuildValue=0x7f060008;
         public static final int initialUnBuildValue=0x7f060009;
         public static final int startBuildingText=0x7f06000b;
         public static final int startButtonLabel=0x7f06000a;
+        public static final int successStatusMessage=0x7f06001a;
         public static final int timeUpMessage=0x7f06000e;
         public static final int timerInitVal=0x7f060007;
         public static final int unBuiltImageDescription=0x7f060005;

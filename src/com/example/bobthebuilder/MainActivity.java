@@ -41,7 +41,10 @@ public class MainActivity extends Activity {
 	private TextView statusText;
 	private TextView buildNumberText;
 	private TextView unBuildNumberText;
+	private ImageView bobBubbleImage;
+	private ImageView groundBubbleImage;
 	private ImageView shovelImage;
+	private ImageView truckImage;
 	private TranslateAnimation animation;
 	
 	private NotificationManager mNotificationManager;
@@ -63,6 +66,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         //Hiding Status Bar
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
@@ -74,10 +78,19 @@ public class MainActivity extends Activity {
 		buildNumberText = (TextView) this.findViewById(R.id.buildNumberTextView);
 		unBuildNumberText = (TextView) this.findViewById(R.id.unBuildNumberTextView);
 		shovelImage = (ImageView) findViewById(R.id.shovelImageView);
+		bobBubbleImage = (ImageView) findViewById(R.id.imageView1);
+		groundBubbleImage = (ImageView) findViewById(R.id.imageView2);
+		truckImage = (ImageView) findViewById(R.id.truckImageView);
 		
+		//Initialize Timer
 		countDownTimer = new MalibuCountDownTimer(startTime, interval);
 		timerText.setText(convertMilliToTimeString(startTime));
-          
+		
+		//Initialize Images and hide whatever not required
+        groundBubbleImage.setVisibility(View.INVISIBLE);
+        truckImage.setVisibility(View.INVISIBLE);
+        truckImage.setScaleX(-1);
+		
         //Code for returning on the application after screen unlocked
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
 
@@ -128,7 +141,8 @@ public class MainActivity extends Activity {
         boolean screenOn;
         screenOn = pm.isScreenOn();
     	super.onStop();
-    	if (screenOn) {
+    
+    	if (screenOn && timerHasStarted) {
     	countDownTimer.cancel();
 		timerHasStarted = false;
 		timerText.setText(getText(R.string.timerInitVal));
@@ -143,6 +157,11 @@ public class MainActivity extends Activity {
 	        editor.commit();
     	//tToast("onStop.");
 		displayNotification();
+		groundBubbleImage.setVisibility(View.INVISIBLE);
+		truckImage.setVisibility(View.INVISIBLE);
+		truckImage.clearAnimation();
+		bobBubbleImage.setVisibility(View.VISIBLE);
+		shovelImage.setVisibility(View.VISIBLE);
     	Log.v("$$$$$$", "In Method: onStop()");
     	}
     }
@@ -167,6 +186,35 @@ public class MainActivity extends Activity {
         }
     }
         
+    public void startTruckAnimation(final ImageView truck){
+    	TranslateAnimation anim = new TranslateAnimation(0.0f, 70.0f, 0.0f, 0.0f);
+    	anim.setDuration(1000);
+    	anim.setRepeatCount(Animation.INFINITE);
+        anim.setRepeatMode(2);
+        anim.setFillAfter(true);
+    	anim.setAnimationListener(new TranslateAnimation.AnimationListener() {
+
+    	@Override
+    	public void onAnimationStart(Animation animation) { }
+
+    	@Override
+    	public void onAnimationRepeat(Animation animation) { 
+    		if(truck.getScaleX() == -1){
+    			truck.setScaleX(1);
+    		}
+    		else{
+    			truck.setScaleX(-1);
+    		}
+    		
+    	}
+
+    	@Override
+    	public void onAnimationEnd(Animation animation)	{ }
+    	
+    	});
+
+    	truck.startAnimation(anim);
+    }
     
     
 	public void startTimer(View v)	{
@@ -176,6 +224,11 @@ public class MainActivity extends Activity {
 			startB.setText(R.string.duringBuildButtonLabel);
 			statusText.setText(R.string.duringBuildingText);
 			shovelImage.clearAnimation();
+			shovelImage.setVisibility(View.INVISIBLE);
+			groundBubbleImage.setVisibility(View.VISIBLE);
+			truckImage.setVisibility(View.VISIBLE);
+			startTruckAnimation(truckImage);
+			bobBubbleImage.setVisibility(View.INVISIBLE);
 		}
 		else {
 			alertMessage();
@@ -201,6 +254,21 @@ public class MainActivity extends Activity {
  	        editor.commit();
  		   statusText.setText(getText(R.string.timeUpMessage));
  		   timerText.setText(getText(R.string.timerInitVal));
+ 		   startB.setText(R.string.startButtonLabel);
+ 		   groundBubbleImage.setVisibility(View.INVISIBLE);
+ 		   truckImage.setVisibility(View.INVISIBLE);
+ 		   truckImage.clearAnimation();
+ 		   bobBubbleImage.setVisibility(View.VISIBLE);
+ 		   shovelImage.setVisibility(View.VISIBLE);
+ 		   
+ 		   //If Screen off, then send a notification
+ 		   PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+ 	       boolean screenOn;
+ 	       screenOn = pm.isScreenOn();
+ 	       if(!screenOn){
+ 	    	   displaySuccessNotification();
+ 	       }
+
  		}
 
  		@Override
@@ -243,6 +311,11 @@ public class MainActivity extends Activity {
            		 	        // Commit to storage
               		 	        editor.commit();
               		 	        shovelImage.startAnimation(animation);
+              		 	        groundBubbleImage.setVisibility(View.INVISIBLE);
+              		 	        truckImage.setVisibility(View.INVISIBLE);
+              		 	        truckImage.clearAnimation();
+              		 	        bobBubbleImage.setVisibility(View.VISIBLE);
+              		 	        shovelImage.setVisibility(View.VISIBLE);
                              break;
                       case DialogInterface.BUTTON_NEGATIVE:
                     	  	//Do Nothing
@@ -306,16 +379,55 @@ public class MainActivity extends Activity {
         toast.show();
     }
     
-    protected void displayNotification() {
-        Log.v("Start", "notification");
+    protected void displaySuccessNotification(){
+    	Log.v("Notification", "Success notification");
 
         /* Invoking the default notification service */
         NotificationCompat.Builder  mBuilder =  new NotificationCompat.Builder(this);	
 
-        mBuilder.setContentTitle("New Message");
-        mBuilder.setContentText("You've received new message.");
-        mBuilder.setTicker("New Message Alert!");
+        mBuilder.setContentTitle("Successfully Built a Building!!");
+        mBuilder.setContentText("Now that you built your building. Share it with your friends");
+        mBuilder.setTicker("Yaay!! your Building is ready.");
         mBuilder.setSmallIcon(R.drawable.woman);
+
+        /* Increase notification number every time a new notification arrives */
+        mBuilder.setNumber(++numMessages);
+        
+        /* Creates an explicit intent for an Activity in your app */
+        Intent resultIntent = new Intent(this, NotificationView.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(NotificationView.class);
+
+        /* Adds the Intent that starts the Activity to the top of the stack */
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+           stackBuilder.getPendingIntent(
+              0,
+              PendingIntent.FLAG_UPDATE_CURRENT
+           );
+        //For canceling the notification on click 
+        mBuilder.setAutoCancel(true);
+        
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        mNotificationManager =
+        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        /* notificationID allows you to update the notification later on. */
+        mNotificationManager.notify(notificationID, mBuilder.build());
+    }
+    
+    protected void displayNotification() {
+        Log.v("Notification", "Failure notification");
+
+        /* Invoking the default notification service */
+        NotificationCompat.Builder  mBuilder =  new NotificationCompat.Builder(this);	
+
+        mBuilder.setContentTitle("You killed Bob");
+        mBuilder.setContentText("The building was destroyed as well!");
+        mBuilder.setTicker("Oops! Poor Bob");
+        mBuilder.setSmallIcon(R.drawable.dead_bob);
 
         /* Increase notification number every time a new notification arrives */
         mBuilder.setNumber(++numMessages);
