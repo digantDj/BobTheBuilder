@@ -23,7 +23,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".NotificationView"
-             android:label="Details of notification"
+             android:label="Failure Notification"
+             android:parentActivityName=".MainActivity">
+       <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".MainActivity"/>
+        </activity>
+        <activity android:name=".NotificationSuccessView"
+             android:label="Success Notification"
              android:parentActivityName=".MainActivity">
        <meta-data
         android:name="android.support.PARENT_ACTIVITY"

@@ -271,7 +271,7 @@ public class MainActivity extends Activity {
  	       }
  	       else{
  	    	   Intent intent;
-	 	       intent = new Intent(MainActivity.this, NotificationView.class);
+	 	       intent = new Intent(MainActivity.this, NotificationSuccessView.class);
 	 	       startActivity(intent);
  	       }
 
