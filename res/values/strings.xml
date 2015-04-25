@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">Bob The Builder</string>
     <string name="hello_world">Hello world!</string>
@@ -36,5 +36,13 @@
     <string name="failureStatusMessage">Ohho! :( Try again maybe.ReBuild.</string>
     <string name="successStatusMessage">Kudos! Share your score now ;)</string>
     <string name="goBack">&lt;&lt; Go Back</string>
-
+    
+    <string name="lorem_ipsum">Test Content for Slide Testing</string>
+	<string name="action_previous">Previous</string>
+	<string name="action_next">Next</string>
+	<string name="action_finish">Finish</string>
+	<string name="go_button">Let\'s Start!</string>
+	<string name="walkThroughImageDescription">WalkThrough Background</string>
+	<string name="title_template_step">Step <xliff:g id="step_number">%1$d</xliff:g>: Lorem
+        Ipsum</string>
 </resources>

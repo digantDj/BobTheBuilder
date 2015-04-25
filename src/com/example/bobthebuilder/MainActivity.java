@@ -18,6 +18,7 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -66,6 +67,28 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+       
+      //First time Splash Screen
+        
+        SharedPreferences ratePrefs = getSharedPreferences("First Update", 0);
+        Log.v("SplashScreen Value","Splash Screen Value is "+ ratePrefs.getBoolean("FrstTime", false));
+        if (!ratePrefs.getBoolean("FrstTime", false)) {
+        	//Set flag for FirstTime
+        Editor edit = ratePrefs.edit();
+        edit.putBoolean("FrstTime", true);
+        edit.commit();
+        	//Launching the workflow screen
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intt;
+     	       intt = new Intent(MainActivity.this, ScreenSlideActivity.class);
+     	       startActivity(intt);
+            }
+        	}, 1000);
+        
+        }
         
         //Hiding Status Bar
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
@@ -169,6 +192,7 @@ public class MainActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
+        truckImage.setScaleX(-1);
         //tToast("onResume.");
         isInFront = true;
         Log.v("$$$$$$", "In Method: onResume()");
@@ -185,6 +209,7 @@ public class MainActivity extends Activity {
         	unBuildNumberText.setText(bobUnBuildScore);
            //tToast(sharedpreferences.getString(UnBuiltScore, ""));
         }
+
     }
         
     public void startTruckAnimation(final ImageView truck){

@@ -3,7 +3,11 @@
     package="com.example.bobthebuilder"
     android:versionCode="1"
     android:versionName="1.0" >
-
+	
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
     <uses-sdk
         android:minSdkVersion="17"
         android:targetSdkVersion="19" />
@@ -36,6 +40,23 @@
         android:name="android.support.PARENT_ACTIVITY"
         android:value=".MainActivity"/>
         </activity>
+        <activity
+            android:name=".ScreenSlideActivity"
+            android:label="@string/walkThroughImageDescription"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.millennialmedia.android.MMActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar" 
+    		android:configChanges="keyboardHidden|orientation|keyboard" ></activity>
+		<meta-data
+    	android:name="com.google.android.gms.version"
+    	android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

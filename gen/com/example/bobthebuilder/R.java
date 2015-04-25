@@ -14,11 +14,11 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int backgroundColor=0x7f070002;
-        public static final int backgroundColor2=0x7f070003;
-        public static final int bobColor=0x7f070000;
-        public static final int bobColorShadow=0x7f070004;
-        public static final int bobTextColor=0x7f070001;
+        public static final int backgroundColor=0x7f080002;
+        public static final int backgroundColor2=0x7f080003;
+        public static final int bobColor=0x7f080000;
+        public static final int bobColorShadow=0x7f080004;
+        public static final int bobTextColor=0x7f080001;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -47,61 +47,87 @@ public final class R {
         public static final int success_bob=0x7f02000c;
         public static final int truck=0x7f02000d;
         public static final int un_built_house=0x7f02000e;
-        public static final int woman=0x7f02000f;
+        public static final int walkthrough1=0x7f02000f;
+        public static final int walkthrough2=0x7f020010;
+        public static final int walkthrough3=0x7f020011;
+        public static final int walkthrough4=0x7f020012;
+        public static final int woman=0x7f020013;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f0a0000;
-        public static final int action_settings=0x7f0a000d;
-        public static final int buildNumberTextView=0x7f0a0002;
-        public static final int builtHouse=0x7f0a0001;
-        public static final int goBackTextView=0x7f0a000c;
-        public static final int imageView1=0x7f0a0006;
-        public static final int imageView2=0x7f0a0007;
-        public static final int shovelImageView=0x7f0a0008;
-        public static final int startButton=0x7f0a000b;
-        public static final int statusTextView=0x7f0a0005;
-        public static final int timerValue=0x7f0a000a;
-        public static final int truckImageView=0x7f0a0009;
-        public static final int unBuildNumberTextView=0x7f0a0004;
-        public static final int unBuiltHouse=0x7f0a0003;
+        public static final int LinearLayout1=0x7f060002;
+        public static final int action_flip=0x7f060001;
+        /** 
+        These action bar item IDs (menu item IDs) are defined here for
+        programmatic use. Normally, IDs are created using the "@+id/foo"
+        syntax, but since these IDs aren't created in menu XML, rather
+        used for programmatically-instantiated action bar items, they
+        are defined here.
+    
+         */
+        public static final int action_next=0x7f060000;
+        public static final int action_previous=0x7f060011;
+        public static final int action_settings=0x7f060012;
+        public static final int buildNumberTextView=0x7f060004;
+        public static final int builtHouse=0x7f060003;
+        public static final int goBackTextView=0x7f060010;
+        public static final int goButton=0x7f06000f;
+        public static final int imageView1=0x7f060008;
+        public static final int imageView2=0x7f060009;
+        public static final int myfivepanelpager=0x7f06000e;
+        public static final int shovelImageView=0x7f06000a;
+        public static final int startButton=0x7f06000d;
+        public static final int statusTextView=0x7f060007;
+        public static final int timerValue=0x7f06000c;
+        public static final int truckImageView=0x7f06000b;
+        public static final int unBuildNumberTextView=0x7f060006;
+        public static final int unBuiltHouse=0x7f060005;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int notification=0x7f030001;
-        public static final int notification_success=0x7f030002;
+        public static final int activity_screen_slide=0x7f030001;
+        public static final int notification=0x7f030002;
+        public static final int notification_success=0x7f030003;
     }
     public static final class menu {
-        public static final int main=0x7f090000;
+        public static final int activity_screen_slide=0x7f0a0000;
+        public static final int main=0x7f0a0001;
     }
     public static final class string {
-        public static final int action_settings=0x7f060002;
-        public static final int app_name=0x7f060000;
-        public static final int baseImageDescription=0x7f060003;
-        public static final int builtImageDescription=0x7f060004;
-        public static final int calc=0x7f060006;
-        public static final int duringBuildButtonLabel=0x7f06000d;
-        public static final int duringBuildMessage1=0x7f06000f;
-        public static final int duringBuildMessage10=0x7f060018;
-        public static final int duringBuildMessage2=0x7f060010;
-        public static final int duringBuildMessage3=0x7f060011;
-        public static final int duringBuildMessage4=0x7f060012;
-        public static final int duringBuildMessage5=0x7f060013;
-        public static final int duringBuildMessage6=0x7f060014;
-        public static final int duringBuildMessage7=0x7f060015;
-        public static final int duringBuildMessage8=0x7f060016;
-        public static final int duringBuildMessage9=0x7f060017;
-        public static final int duringBuildingText=0x7f06000c;
-        public static final int failureStatusMessage=0x7f060019;
-        public static final int goBack=0x7f06001b;
-        public static final int hello_world=0x7f060001;
-        public static final int initialBuildValue=0x7f060008;
-        public static final int initialUnBuildValue=0x7f060009;
-        public static final int startBuildingText=0x7f06000b;
-        public static final int startButtonLabel=0x7f06000a;
-        public static final int successStatusMessage=0x7f06001a;
-        public static final int timeUpMessage=0x7f06000e;
-        public static final int timerInitVal=0x7f060007;
-        public static final int unBuiltImageDescription=0x7f060005;
+        public static final int action_finish=0x7f07001f;
+        public static final int action_next=0x7f07001e;
+        public static final int action_previous=0x7f07001d;
+        public static final int action_settings=0x7f070002;
+        public static final int app_name=0x7f070000;
+        public static final int baseImageDescription=0x7f070003;
+        public static final int builtImageDescription=0x7f070004;
+        public static final int calc=0x7f070006;
+        public static final int duringBuildButtonLabel=0x7f07000d;
+        public static final int duringBuildMessage1=0x7f07000f;
+        public static final int duringBuildMessage10=0x7f070018;
+        public static final int duringBuildMessage2=0x7f070010;
+        public static final int duringBuildMessage3=0x7f070011;
+        public static final int duringBuildMessage4=0x7f070012;
+        public static final int duringBuildMessage5=0x7f070013;
+        public static final int duringBuildMessage6=0x7f070014;
+        public static final int duringBuildMessage7=0x7f070015;
+        public static final int duringBuildMessage8=0x7f070016;
+        public static final int duringBuildMessage9=0x7f070017;
+        public static final int duringBuildingText=0x7f07000c;
+        public static final int failureStatusMessage=0x7f070019;
+        public static final int goBack=0x7f07001b;
+        public static final int go_button=0x7f070020;
+        public static final int hello_world=0x7f070001;
+        public static final int initialBuildValue=0x7f070008;
+        public static final int initialUnBuildValue=0x7f070009;
+        public static final int lorem_ipsum=0x7f07001c;
+        public static final int startBuildingText=0x7f07000b;
+        public static final int startButtonLabel=0x7f07000a;
+        public static final int successStatusMessage=0x7f07001a;
+        public static final int timeUpMessage=0x7f07000e;
+        public static final int timerInitVal=0x7f070007;
+        public static final int title_template_step=0x7f070022;
+        public static final int unBuiltImageDescription=0x7f070005;
+        public static final int walkThroughImageDescription=0x7f070021;
     }
     public static final class style {
         /** 
@@ -125,10 +151,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseTheme=0x7f090000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080001;
+        public static final int AppTheme=0x7f090001;
     }
 }
