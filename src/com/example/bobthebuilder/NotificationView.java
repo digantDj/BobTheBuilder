@@ -1,5 +1,8 @@
 package com.example.bobthebuilder;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,17 +26,23 @@ public class NotificationView extends Activity{
 	private TextView buildNumberText;
 	private TextView unBuildNumberText;
 	
-	   @Override
+	@Override
 	   public void onCreate(Bundle savedInstanceState)
 	   {
 		   super.onCreate(savedInstanceState);
-		   
+
 	        //Hiding Status Bar
 	        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 	        getActionBar().hide();
 		   
 		   //Setting Notification View
-		   setContentView(R.layout.notification);   
+		   setContentView(R.layout.notification);
+		   
+		   // Initialize Google AdMob Adv
+	        AdView mAdView = (AdView) findViewById(R.id.adView);
+	        AdRequest adRequest = new AdRequest.Builder().build();
+	        mAdView.loadAd(adRequest);
+
 	        
 	        //Initialize TextBox elements
 	        buildNumberText = (TextView) this.findViewById(R.id.buildNumberTextView);

@@ -1,5 +1,8 @@
 package com.example.bobthebuilder;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +38,13 @@ public class NotificationSuccessView extends Activity {
 		   //Setting Notification View
 		   setContentView(R.layout.notification_success);   
 	        
+
+		   // Initialize Google AdMob Adv
+	        AdView mAdView = (AdView) findViewById(R.id.adView);
+	        AdRequest adRequest = new AdRequest.Builder().build();
+	        mAdView.loadAd(adRequest);
+	        
+		   
 	        //Initialize TextBox elements
 	        buildNumberText = (TextView) this.findViewById(R.id.buildNumberTextView);
 			unBuildNumberText = (TextView) this.findViewById(R.id.unBuildNumberTextView);

@@ -45,4 +45,8 @@
 	<string name="walkThroughImageDescription">WalkThrough Background</string>
 	<string name="title_template_step">Step <xliff:g id="step_number">%1$d</xliff:g>: Lorem
         Ipsum</string>
+        
+	<string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+	<string name="banner_ad_unit_id">ca-app-pub-5382733936047144/1417772242</string>
+	
 </resources>
