@@ -69,16 +69,17 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         
        
-      //First time Splash Screen
-        
+      	// Load Splash Screen after install
         SharedPreferences ratePrefs = getSharedPreferences("First Update", 0);
         Log.v("SplashScreen Value","Splash Screen Value is "+ ratePrefs.getBoolean("FrstTime", false));
         if (!ratePrefs.getBoolean("FrstTime", false)) {
-        	//Set flag for FirstTime
+        
+	// Set flag for FirstTime
         Editor edit = ratePrefs.edit();
         edit.putBoolean("FrstTime", true);
         edit.commit();
-        	//Launching the workflow screen
+        
+	// Launching the workflow screen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -86,41 +87,41 @@ public class MainActivity extends Activity {
      	       intt = new Intent(MainActivity.this, ScreenSlideActivity.class);
      	       startActivity(intt);
             }
-        	}, 1000);
+        }, 1000);
         
-        }
+   }
         
-        //Hiding Status Bar
+        // Hiding Status Bar
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
         setContentView(R.layout.activity_main);
         
         startB = (Button) findViewById(R.id.startButton);
         statusText = (TextView) this.findViewById(R.id.statusTextView);
-		timerText = (TextView) this.findViewById(R.id.timerValue);
-		buildNumberText = (TextView) this.findViewById(R.id.buildNumberTextView);
-		unBuildNumberText = (TextView) this.findViewById(R.id.unBuildNumberTextView);
-		shovelImage = (ImageView) findViewById(R.id.shovelImageView);
-		bobBubbleImage = (ImageView) findViewById(R.id.imageView1);
-		groundBubbleImage = (ImageView) findViewById(R.id.imageView2);
-		truckImage = (ImageView) findViewById(R.id.truckImageView);
+	timerText = (TextView) this.findViewById(R.id.timerValue);
+	buildNumberText = (TextView) this.findViewById(R.id.buildNumberTextView);
+	unBuildNumberText = (TextView) this.findViewById(R.id.unBuildNumberTextView);
+	shovelImage = (ImageView) findViewById(R.id.shovelImageView);
+	bobBubbleImage = (ImageView) findViewById(R.id.imageView1);
+	groundBubbleImage = (ImageView) findViewById(R.id.imageView2);
+	truckImage = (ImageView) findViewById(R.id.truckImageView);
 		
-		//Initialize Timer
-		countDownTimer = new MalibuCountDownTimer(startTime, interval);
-		timerText.setText(convertMilliToTimeString(startTime));
+	// Initialize Timer
+	countDownTimer = new MalibuCountDownTimer(startTime, interval);
+	timerText.setText(convertMilliToTimeString(startTime));
 		
-		//Initialize Images and hide whatever not required
+	// Initialize Images and hide whatever not required
         groundBubbleImage.setVisibility(View.INVISIBLE);
         truckImage.setVisibility(View.INVISIBLE);
         truckImage.setScaleX(-1);
 		
-        //Code for returning on the application after screen unlocked
+        // Code for returning on the application after screen unlocked
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
 
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_USER_PRESENT);
         
-        //Retrieve Stored Data
+        // Retrieve Stored Data
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         if (sharedpreferences.contains(BuiltScore))
         {
@@ -133,16 +134,15 @@ public class MainActivity extends Activity {
         	unBuildNumberText.setText(bobUnBuildScore);
         }
         
-        //Set Font for entire android project
+        // Set Font for entire android project
         Typeface robotoThinFont = Typeface.createFromAsset(getAssets(),"fonts/Roboto/Roboto-Thin.ttf");
         Typeface robotoCondensedFont = Typeface.createFromAsset(getAssets(),"fonts/RobotoCondensed/RobotoCondensed-Regular.ttf");
         statusText.setTypeface(robotoCondensedFont);
         timerText.setTypeface(robotoThinFont);
         startB.setTypeface(robotoCondensedFont);
         
-        //Animation shovel
-        animation = new TranslateAnimation(0.0f, 0.0f,
-          0.0f, 20.0f);
+        // Animation shovel
+        animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 20.0f);
         animation.setDuration(1000);
         animation.setRepeatCount(Animation.INFINITE);
         animation.setRepeatMode(2);
@@ -397,14 +397,14 @@ public class MainActivity extends Activity {
     {
           Log.v("$````$", "In Method: onSaveInstanceState()");
           //if necessary,set a flag to check whether we have to restore or not
-          //handle necessary savings…
+          //handle necessary savingsÂ…
     }
 
     @Override
     public void onRestoreInstanceState(Bundle inState)
     {
           Log.v("$````$", "In Method: onRestoreInstanceState()");
-          //if any saved state, restore from it…
+          //if any saved state, restore from itÂ…
     }
     
     private void tToast(String s) {
@@ -480,7 +480,7 @@ public class MainActivity extends Activity {
               0,
               PendingIntent.FLAG_UPDATE_CURRENT
            );
-        //For canceling the notification on click 
+        // For canceling the notification on click 
         mBuilder.setAutoCancel(true);
         
         mBuilder.setContentIntent(resultPendingIntent);
@@ -488,7 +488,7 @@ public class MainActivity extends Activity {
         mNotificationManager =
         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        /* notificationID allows you to update the notification later on. */
+        // notificationID allows you to update the notification later on. 
         mNotificationManager.notify(notificationID, mBuilder.build());
         
      }
